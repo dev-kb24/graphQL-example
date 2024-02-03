@@ -1,7 +1,7 @@
 {
-  "name": "clean_architecture",
+  "name": "graphQl-example",
   "version": "0.0.1",
-  "description": "",
+  "description": "ce projet utilise graphQl et la clean architecture",
   "main": "index.js",
   "scripts": {
     "start:dev": "nodemon ./src/app.ts"
