@@ -15,4 +15,16 @@ export class MessageRepository implements MessagesInterface{
     async create(name: string, description: string) {
         return await this.repository.create({name, description});
     }
+
+    async findById(_id: string) {
+        return await this.repository.findById(_id);
+    }
+
+    async update(_id: string, name: string, description: string) {
+        return await this.repository.findByIdAndUpdate(_id, {name, description}, {new: true});
+    }
+
+    async delete(_id: string) {
+        return await this.repository.findByIdAndDelete(_id);
+    }
 }

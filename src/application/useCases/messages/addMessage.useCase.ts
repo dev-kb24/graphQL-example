@@ -5,6 +5,12 @@ export class AddMessageUseCase{
     constructor(private readonly messageRepository: MessagesInterface) {}
 
     async execute(name: string, description: string) {
-        return await this.messageRepository.create(name, description)
+        try {
+            const createdMessage = await this.messageRepository.create(name, description);
+            if(!createdMessage) throw new Error('Message not created');
+            return createdMessage;
+        } catch (error) {
+            throw error;
+        }
     }
 }

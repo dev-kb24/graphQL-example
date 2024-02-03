@@ -5,6 +5,12 @@ export class FindAllUseCase{
     constructor(private readonly messageRepository: MessagesInterface) {}
 
     async execute() {
-        return await this.messageRepository.findAll();
+        try {
+            const foundMessages = await this.messageRepository.findAll();
+            if(!foundMessages) throw new Error('Messages not found');
+            return foundMessages;
+        } catch (error) {
+            throw error;
+        }
     }
 }
