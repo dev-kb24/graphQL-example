@@ -2,10 +2,10 @@ import { GraphQLID, GraphQLList, GraphQLObjectType, GraphQLSchema, GraphQLString
 import { FindAllUseCase } from "../../application/useCases/messages/findAll.useCase";
 import { AddMessageUseCase } from "../../application/useCases/messages/addMessage.useCase";
 import { MessageRepository } from "../../infrastructure/repositories/messages.repository";
-import { MessagesPresenter } from "../presenters/messages.presenters";
 import { FindByIdUseCase } from "../../application/useCases/messages/findById.useCase";
 import { UpdateUseCase } from "../../application/useCases/messages/update.useCase";
 import { DeleteUseCase } from "../../application/useCases/messages/delete.useCase";
+import { Messages } from "../../domain/entities/messages.entity";
 
 export class MessagesController {
     type: GraphQLObjectType;
@@ -75,34 +75,29 @@ export class MessagesController {
         });
     }
 
-    private async findAll(){
+    private async findAll() : Promise<Messages[]>{
       const findAllUseCase = new FindAllUseCase(new MessageRepository());
-      const messages = await findAllUseCase.execute();
-      return messages.map( message => new MessagesPresenter(message).getPresenter()); 
+      return await findAllUseCase.execute();
     }
 
-    private async findById(_id: string){
+    private async findById(_id: string) : Promise<Messages | null>{
       const findByIdUseCase = new FindByIdUseCase(new MessageRepository());
-      const message = await findByIdUseCase.execute(_id);
-      return new MessagesPresenter(message).getPresenter();
+      return await findByIdUseCase.execute(_id);
     }
 
-    private async addMessage(name: string, description: string){
+    private async addMessage(name: string, description: string) : Promise<Messages | null>{
       const addMessageUseCase = new AddMessageUseCase(new MessageRepository());
-      const message = await addMessageUseCase.execute(name, description);
-      return new MessagesPresenter(message).getPresenter();
+      return await addMessageUseCase.execute(name, description);
     }
 
-    private async updateMessage(_id: string, name: string, description: string){
+    private async updateMessage(_id: string, name: string, description: string) : Promise<Messages | null>{
       const addMessageUseCase = new UpdateUseCase(new MessageRepository());
-      const message = await addMessageUseCase.execute(_id, name, description);
-      return new MessagesPresenter(message).getPresenter();
+      return await addMessageUseCase.execute(_id, name, description);
     }
 
-    private async deleteMessage(_id: string){
+    private async deleteMessage(_id: string) : Promise<Messages | null>{
       const deleteUseCase = new DeleteUseCase(new MessageRepository());
-      const message = await deleteUseCase.execute(_id);
-      return new MessagesPresenter(message).getPresenter();
+      return await deleteUseCase.execute(_id);
     }
   
 

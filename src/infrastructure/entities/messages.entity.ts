@@ -1,8 +1,13 @@
 import mongoose from "mongoose";
 const messageSchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
-    name: String,
-    description: String
-})
+    name: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    }
+},{timestamps: true})
 
 export const messageModel = mongoose.model('Messages', messageSchema);
